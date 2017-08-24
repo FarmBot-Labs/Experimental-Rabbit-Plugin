@@ -23,12 +23,17 @@
 -export([init/1]).
 
 start(_Type, _StartArgs) ->
-    supervisor:start_link({local,?MODULE},?MODULE,[]).
+  application:set_env(rabbit_auth_backend_jwt, farmbot_api_key_url, "http://localhost:3000/api/public_key"),
+  supervisor:start_link({local,?MODULE},?MODULE,[]).
 
-stop(_State) ->
-    ok.
+stop(_State) -> ok.
 
 %%----------------------------------------------------------------------------
 
 init([]) ->
-    {ok, {{one_for_one,3,10},[]}}.
+  Mod = rabbit_auth_backend_jwt_pub_key_fetcher,
+  Id = Mod,
+  Mfa = {Mod, start_link, []},
+  Modules = [Mod],
+  Child = {Id, Mfa, permanent, brutal_kill, worker, Modules},
+  {ok, {{one_for_one,3,10},[Child]}}.

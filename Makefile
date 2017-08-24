@@ -1,4 +1,4 @@
-PROJECT = rabbitmq_auth_backend_jwt
+PROJECT = rabbit_auth_backend_jwt
 PROJECT_DESCRIPTION = RabbitMQ JSON Web token authorization
 PROJECT_MOD = rabbit_auth_backend_jwt_app
 
