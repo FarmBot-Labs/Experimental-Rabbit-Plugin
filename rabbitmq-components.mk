@@ -11,20 +11,20 @@ endif
 #   3. a version based on git-describe(1), if it is a Git clone;
 #   4. 0.0.0
 
-PROJECT_VERSION := $(RABBITMQ_VERSION)
+PROJECT_VERSION := 0.0.1
 
-ifeq ($(PROJECT_VERSION),)
-PROJECT_VERSION := $(shell \
-if test -f git-revisions.txt; then \
-	head -n1 git-revisions.txt | \
-	awk '{print $$$(words $(PROJECT_DESCRIPTION) version);}'; \
-else \
-	(git describe --dirty --abbrev=7 --tags --always --first-parent \
-	 2>/dev/null || echo rabbitmq_v0_0_0) | \
-	sed -e 's/^rabbitmq_v//' -e 's/^v//' -e 's/_/./g' -e 's/-/+/' \
-	 -e 's/-/./g'; \
-fi)
-endif
+# ifeq ($(PROJECT_VERSION),)
+# PROJECT_VERSION := $(shell \
+# if test -f git-revisions.txt; then \
+# 	head -n1 git-revisions.txt | \
+# 	awk '{print $$$(words $(PROJECT_DESCRIPTION) version);}'; \
+# else \
+# 	(git describe --dirty --abbrev=7 --tags --always --first-parent \
+# 	 2>/dev/null || echo rabbitmq_v0_0_0) | \
+# 	sed -e 's/^rabbitmq_v//' -e 's/^v//' -e 's/_/./g' -e 's/-/+/' \
+# 	 -e 's/-/./g'; \
+# fi)
+# endif
 
 # --------------------------------------------------------------------
 # RabbitMQ components.
