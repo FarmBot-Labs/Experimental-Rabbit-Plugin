@@ -34,7 +34,9 @@ description() ->
 
 %%--------------------------------------------------------------------
 
+%% Decide if the user gave us a valid JWT.
 user_login_authentication(_Username, _AuthProps) ->
+  % Step 1: Validate that the JWT is is real.
   {error, not_implemented}.
 
 user_login_authorization(Username) ->
