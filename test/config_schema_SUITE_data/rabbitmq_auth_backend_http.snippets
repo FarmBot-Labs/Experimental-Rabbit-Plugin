@@ -3,7 +3,7 @@
    auth_http.user_path     = http://some-server/auth/user
    auth_http.vhost_path    = http://some-server/auth/vhost
    auth_http.resource_path = http://some-server/auth/resource",
-  [{rabbit,[{auth_backends,[rabbit_auth_backend_http]}]},
+  [{rabbit,[{auth_backends,[rabbit_auth_backend_jwt]}]},
    {rabbitmq_auth_backend_http,
        [{user_path,"http://some-server/auth/user"},
         {vhost_path,"http://some-server/auth/vhost"},

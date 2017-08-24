@@ -21,7 +21,7 @@ releases of this plugin support different versions of RabbitMQ.
 ## Enabling the Plugin
 
 To enable the plugin, set the value of the `auth_backends` configuration item
-for the `rabbit` application to include `rabbit_auth_backend_http`.
+for the `rabbit` application to include `rabbit_auth_backend_jwt`.
 `auth_backends` is a list of authentication providers to try in order.
 
 See the [Access Control guide](http://rabbitmq.com/access-control.html) for more information.
@@ -33,7 +33,7 @@ in master)
 
 Or, in the classic config format (`rabbitmq.config`, prior to 3.7.0) or `advanced.config`:
 
-    [{rabbit, [{auth_backends, [rabbit_auth_backend_http]}]}].
+    [{rabbit, [{auth_backends, [rabbit_auth_backend_jwt]}]}].
 
 See [RabbitMQ Configuration guide](http://www.rabbitmq.com/configure.html) for more detail
 on `auth_backends`.
@@ -56,7 +56,7 @@ In `rabbitmq.conf` (currently RabbitMQ master):
 In the classic config format (`rabbitmq.config` prior to 3.7.0 or `advanced.config`):
 
     [
-      {rabbit, [{auth_backends, [rabbit_auth_backend_http]}]},
+      {rabbit, [{auth_backends, [rabbit_auth_backend_jwt]}]},
       {rabbitmq_auth_backend_http,
        [{http_method,   post},
         {user_path,     "http(s)://some-server/auth/user"},
@@ -122,7 +122,7 @@ If your Web server uses HTTPS and certificate verification, you need to
 configure the plugin to use a CA and client certificate/key pair using the `rabbitmq_auth_backend_http.ssl_options` config variable:
 
     [
-      {rabbit, [{auth_backends, [rabbit_auth_backend_http]}]},
+      {rabbit, [{auth_backends, [rabbit_auth_backend_jwt]}]},
       {rabbitmq_auth_backend_http,
        [{http_method,   post},
         {user_path,     "https://some-server/auth/user"},
@@ -143,7 +143,7 @@ It is recommended to use TLS for authentication and enable peer verification.
 ## Debugging
 
 Check the RabbitMQ logs if things don't seem to be working
-properly. Look for log messages containing "rabbit_auth_backend_http
+properly. Look for log messages containing "rabbit_auth_backend_jwt
 failed".
 
 ## Example Apps (Python and Spring Boot)

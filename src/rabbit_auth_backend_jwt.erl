@@ -14,7 +14,7 @@
 %% Copyright (c) 2007-2017 Pivotal Software, Inc.  All rights reserved.
 %%
 
--module(rabbit_auth_backend_http).
+-module(rabbit_auth_backend_jwt).
 
 -include_lib("rabbit_common/include/rabbit.hrl").
 
@@ -33,8 +33,8 @@
 %%--------------------------------------------------------------------
 
 description() ->
-    [{name, <<"HTTP">>},
-     {description, <<"HTTP authentication / authorisation">>}].
+    [{name, <<"JWT">>},
+     {description, <<"JWT authentication / authorisation">>}].
 
 %%--------------------------------------------------------------------
 

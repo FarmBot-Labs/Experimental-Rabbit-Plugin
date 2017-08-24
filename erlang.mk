@@ -18,7 +18,7 @@ ERLANG_MK_FILENAME := $(realpath $(lastword $(MAKEFILE_LIST)))
 export ERLANG_MK_FILENAME
 
 ERLANG_MK_VERSION = 2.0.0-pre.2-256-g2cce185
-ERLANG_MK_WITHOUT = 
+ERLANG_MK_WITHOUT =
 
 # Make 3.81 and 3.82 are deprecated.
 
@@ -254,6 +254,14 @@ pkg_amqp_client_homepage = https://www.rabbitmq.com/erlang-client-user-guide.htm
 pkg_amqp_client_fetch = git
 pkg_amqp_client_repo = https://github.com/rabbitmq/rabbitmq-erlang-client.git
 pkg_amqp_client_commit = master
+
+PACKAGES += jwt
+pkg_jwt_name = jwt
+pkg_jwt_description = Erlang JWT Library
+pkg_jwt_homepage = https://github.com/artemeff/jwt
+pkg_jwt_fetch = git
+pkg_jwt_repo = https://github.com/artemeff/jwt.git
+pkg_jwt_commit = master
 
 PACKAGES += annotations
 pkg_annotations_name = annotations

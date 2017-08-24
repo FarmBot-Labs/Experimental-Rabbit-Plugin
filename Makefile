@@ -1,15 +1,11 @@
-PROJECT = rabbitmq_auth_backend_http
-PROJECT_DESCRIPTION = RabbitMQ HTTP Authentication Backend
-PROJECT_MOD = rabbit_auth_backend_http_app
+PROJECT = rabbitmq_auth_backend_jwt
+PROJECT_DESCRIPTION = RabbitMQ JSON Web token authorization
+PROJECT_MOD = rabbit_auth_backend_jwt_app
 
 define PROJECT_ENV
 [
-	    {http_method,   get},
-	    {user_path,     "http://localhost:8000/auth/user"},
-	    {vhost_path,    "http://localhost:8000/auth/vhost"},
-	    {resource_path, "http://localhost:8000/auth/resource"},
-	    {topic_path,    "http://localhost:8000/auth/topic"}
-	  ]
+
+]
 endef
 
 define PROJECT_APP_EXTRA_KEYS
@@ -17,7 +13,7 @@ define PROJECT_APP_EXTRA_KEYS
 endef
 
 LOCAL_DEPS = inets
-DEPS = rabbit_common rabbit amqp_client
+DEPS = rabbit_common rabbit amqp_client jwt
 
 DEP_EARLY_PLUGINS = rabbit_common/mk/rabbitmq-early-plugin.mk
 DEP_PLUGINS = rabbit_common/mk/rabbitmq-plugin.mk

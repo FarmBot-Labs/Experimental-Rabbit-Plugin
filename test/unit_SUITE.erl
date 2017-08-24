@@ -37,7 +37,7 @@ end_per_group(_, Config) -> Config.
 
 query(_Config) ->
     "username=guest&vhost=%2F&resource=topic&name=amp.topic&permission=write" =
-            rabbit_auth_backend_http:q([
+            rabbit_auth_backend_jwt:q([
                 {username,   <<"guest">>},
                 {vhost,      <<"/">>},
                 {resource,   topic},
@@ -45,7 +45,7 @@ query(_Config) ->
                 {permission, write}]),
 
     "username=guest&routing_key=a.b.c&variable_map.username=guest&variable_map.vhost=other-vhost" =
-        rabbit_auth_backend_http:q([
+        rabbit_auth_backend_jwt:q([
             {username,   <<"guest">>},
             {routing_key,<<"a.b.c">>},
             {variable_map, #{<<"username">> => <<"guest">>,
