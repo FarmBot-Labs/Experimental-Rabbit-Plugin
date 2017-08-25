@@ -21,13 +21,10 @@
 -behaviour(rabbit_authn_backend).
 -behaviour(rabbit_authz_backend).
 
--export([description/0, tkn/0]).
+-export([description/0]).
 
 -export([user_login_authentication/2, user_login_authorization/1,
          check_vhost_access/3, check_resource_access/3, check_topic_access/4]).
-
-tkn() ->
-  <<"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE1MDM2NzY1OTksImp0aSI6IjY5YWZkYmI3LWEwNmItNDlmNC1iOThlLTM0NDljMTNlMzk3ZCIsImlzcyI6Ii8vMTkyLjE2OC4yOS4xNjU6MzAwMCIsImV4cCI6MTUwNzEzMjU5OSwibXF0dCI6IjE5Mi4xNjguMjkuMTY1Iiwib3NfdXBkYXRlX3NlcnZlciI6Imh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3MvZmFybWJvdC9mYXJtYm90X29zL3JlbGVhc2VzL2xhdGVzdCIsImZ3X3VwZGF0ZV9zZXJ2ZXIiOiJodHRwczovL2FwaS5naXRodWIuY29tL3JlcG9zL0Zhcm1ib3QvZmFybWJvdC1hcmR1aW5vLWZpcm13YXJlL3JlbGVhc2VzL2xhdGVzdCIsImJvdCI6ImRldmljZV8yIn0.MO3IQRKIWFB0BkuzQ7_iEKjxb0n2JBAjOK4OomlI2bsP1gakncYRvbMtnRTnhjAhv5ikBuEc26qkFYRpj5DEmNfR-SR86tSAr41Aw9sBA64rqeQqXTDKNmgG5G5dv2U52jJX7IuONnzqSJ0izPg_n8B_tH8-U4VGq8_ZVgQTEzeOZ5BsBoSgCGDhBeiTdFtkfAwEICrxgiv0ct7vslYMDU52HBDRuVXURFGUIYqSR5Hl7a2e6aTbItNl4BX0TaXB8ACYldEiXg_rFwKE2n5PJxfuF9IlmSMv_b1q6MEUb4BmvOplGw5VPdYt7mE6bLFPP6xsS5K_EieZfSMXqV0Jfg">>.
 
 %%--------------------------------------------------------------------
 
@@ -38,29 +35,42 @@ description() ->
 %%--------------------------------------------------------------------
 
 %% Decide if the user gave us a valid JWT.
-user_login_authentication(Username, AuthProps) ->
-  % Step 1: Validate that the JWT is is real.
-  io:fwrite("auth: ~s ~w", [Username, AuthProps]),
-  {error, not_implemented}.
+% user_login_authentication(Username, AuthProps) ->
+%   % Step 1: Validate that the JWT is is real.
+%   % io:fwrite("authn: ~s ~w\n\n", [Username, AuthProps]),
+%   {password, Jwt} = lists:keyfind(password, 1, AuthProps),
+%
+%   case rabbit_auth_backend_jwt_decoder:decode(Jwt) of
+%     {ok, _Bot} -> {ok, #auth_user{username = Username, tags = [], impl = none}};
+%     {error, reason} -> {refused, reason, []}
+%   end.
+
+user_login_authentication(Username, _AuthProps) -> {ok, #auth_user{username = Username, tags = [], impl = none}}.
 
 user_login_authorization(Username) ->
-  io:fwrite("authz: ~s", [Username]),
+  % io:fwrite("authz: ~s\n\n", [Username]),
   case user_login_authentication(Username, []) of
       {ok, #auth_user{impl = Impl}} -> {ok, Impl};
       Else                          -> Else
   end.
 
-check_vhost_access(AuthUser, Vhost, _Sock) ->
-  io:fwrite("vhost: ~w ~s", [AuthUser, Vhost ]),
-  {error, not_implemented}.
+check_vhost_access(_AuthUser, Vhost, _) ->
+  case Vhost of
+    <<"/">> -> true;
+    _   -> false
+  end.
+
+% check_resource_access(#auth_user{username = Username},
+%                       #resource{virtual_host = _VHost, kind = Type, name = Name},
+%                       Permission) ->
+%   io:fwrite("resource access: user: ~s, type: ", [Username])
 
 check_resource_access(AuthUser, Resource, Permission) ->
-  io:fwrite("resource access: ~w ~w ~w", [AuthUser, Resource, Permission]),
-  {error, not_implemented}.
+  io:fwrite("resource access: ~w ~w ~w\n\n", [AuthUser, Resource, Permission]),
+  true.
 
 check_topic_access(AuthUser, Resource, Permission, Context) ->
-  io:fwrite("topic access: ~w ~w ~w ~w", [AuthUser, Resource, Permission, Context]),
-  {error, not_implemented}.
-
+  io:fwrite("topic access: ~w ~w ~w ~w\n\n", [AuthUser, Resource, Permission, Context]),
+  true.
 
 %%--------------------------------------------------------------------

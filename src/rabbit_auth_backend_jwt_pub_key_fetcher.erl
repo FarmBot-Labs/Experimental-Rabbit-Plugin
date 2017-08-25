@@ -24,7 +24,10 @@ init([]) ->
 
 
   case httpc:request(get, {Url, [{"connection", "close"}]}, [], [{body_format, binary}]) of
-    {ok, {{_, 200, _}, _, Resp }} -> {ok, Resp};
+    {ok, {{_, 200, _}, _, PubKeyBin }} ->
+      [RSAEntry] = public_key:pem_decode(PubKeyBin),
+      RSAKey = public_key:pem_entry_decode(RSAEntry),
+      {ok, RSAKey};
     Error                         -> {stop, Error}
   end.
 
