@@ -35,23 +35,28 @@ description() ->
 %%--------------------------------------------------------------------
 
 %% Decide if the user gave us a valid JWT.
-user_login_authentication(_Username, _AuthProps) ->
+user_login_authentication(Username, AuthProps) ->
   % Step 1: Validate that the JWT is is real.
+  io:fwrite("auth: ~s ~w", [Username, AuthProps]),
   {error, not_implemented}.
 
 user_login_authorization(Username) ->
-    case user_login_authentication(Username, []) of
-        {ok, #auth_user{impl = Impl}} -> {ok, Impl};
-        Else                          -> Else
-    end.
+  io:fwrite("authz: ~s", [Username]),
+  case user_login_authentication(Username, []) of
+      {ok, #auth_user{impl = Impl}} -> {ok, Impl};
+      Else                          -> Else
+  end.
 
-check_vhost_access(_AuthUser, _Vhost, _Sock) ->
+check_vhost_access(AuthUser, Vhost, _Sock) ->
+  io:fwrite("vhost: ~w ~s", [AuthUser, Vhost ]),
   {error, not_implemented}.
 
-check_resource_access(_AuthUser, _Resource, _Permission) ->
+check_resource_access(AuthUser, Resource, Permission) ->
+  io:fwrite("resource access: ~w ~w ~w", [AuthUser, Resource, Permission]),
   {error, not_implemented}.
 
-check_topic_access(_AuthUser, _Resource, _Permission, _Context) ->
+check_topic_access(AuthUser, Resource, Permission, Context) ->
+  io:fwrite("topic access: ~w ~w ~w ~w", [AuthUser, Resource, Permission, Context]),
   {error, not_implemented}.
 
 

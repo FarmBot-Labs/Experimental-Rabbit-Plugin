@@ -23,6 +23,8 @@
 -export([init/1]).
 
 start(_Type, _StartArgs) ->
+  io:fwrite("Starting JWT Auth app.\n"),
+  %% Deleteme
   application:set_env(rabbit_auth_backend_jwt, farmbot_api_key_url, "http://localhost:3000/api/public_key"),
   supervisor:start_link({local,?MODULE},?MODULE,[]).
 
@@ -36,4 +38,4 @@ init([]) ->
   Mfa = {Mod, start_link, []},
   Modules = [Mod],
   Child = {Id, Mfa, permanent, brutal_kill, worker, Modules},
-  {ok, {{one_for_one,3,10},[Child]}}.
+  {ok, {{one_for_one,3,10}, [Child]}}.

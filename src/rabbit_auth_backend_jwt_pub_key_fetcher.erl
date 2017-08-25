@@ -20,6 +20,7 @@ fetch() ->
 init([]) ->
   % HTTP get
   {ok, Url} = application:get_env(rabbit_auth_backend_jwt, farmbot_api_key_url),
+  io:fwrite("Trying to fetch public key from: ~s\n", [Url]),
 
 
   case httpc:request(get, {Url, [{"connection", "close"}]}, [], []) of
@@ -27,7 +28,7 @@ init([]) ->
     Error                         -> {stop, Error}
   end.
 
-handle_call(fetch, _Arg, Key) -> {reply, Key, Key}.
+handle_call(fetch, _Arg, Key) -> {reply, {ok, Key}, Key}.
 
 handle_cast(_Cast, Key) -> {noreply, Key}.
 
