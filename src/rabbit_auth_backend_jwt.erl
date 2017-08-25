@@ -21,10 +21,13 @@
 -behaviour(rabbit_authn_backend).
 -behaviour(rabbit_authz_backend).
 
--export([description/0]).
+-export([description/0, tkn/0]).
 
 -export([user_login_authentication/2, user_login_authorization/1,
          check_vhost_access/3, check_resource_access/3, check_topic_access/4]).
+
+tkn() ->
+  <<"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE1MDM2NzY1OTksImp0aSI6IjY5YWZkYmI3LWEwNmItNDlmNC1iOThlLTM0NDljMTNlMzk3ZCIsImlzcyI6Ii8vMTkyLjE2OC4yOS4xNjU6MzAwMCIsImV4cCI6MTUwNzEzMjU5OSwibXF0dCI6IjE5Mi4xNjguMjkuMTY1Iiwib3NfdXBkYXRlX3NlcnZlciI6Imh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3MvZmFybWJvdC9mYXJtYm90X29zL3JlbGVhc2VzL2xhdGVzdCIsImZ3X3VwZGF0ZV9zZXJ2ZXIiOiJodHRwczovL2FwaS5naXRodWIuY29tL3JlcG9zL0Zhcm1ib3QvZmFybWJvdC1hcmR1aW5vLWZpcm13YXJlL3JlbGVhc2VzL2xhdGVzdCIsImJvdCI6ImRldmljZV8yIn0.MO3IQRKIWFB0BkuzQ7_iEKjxb0n2JBAjOK4OomlI2bsP1gakncYRvbMtnRTnhjAhv5ikBuEc26qkFYRpj5DEmNfR-SR86tSAr41Aw9sBA64rqeQqXTDKNmgG5G5dv2U52jJX7IuONnzqSJ0izPg_n8B_tH8-U4VGq8_ZVgQTEzeOZ5BsBoSgCGDhBeiTdFtkfAwEICrxgiv0ct7vslYMDU52HBDRuVXURFGUIYqSR5Hl7a2e6aTbItNl4BX0TaXB8ACYldEiXg_rFwKE2n5PJxfuF9IlmSMv_b1q6MEUb4BmvOplGw5VPdYt7mE6bLFPP6xsS5K_EieZfSMXqV0Jfg">>.
 
 %%--------------------------------------------------------------------
 

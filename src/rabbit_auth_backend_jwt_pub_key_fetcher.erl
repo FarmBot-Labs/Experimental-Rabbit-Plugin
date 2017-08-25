@@ -23,7 +23,7 @@ init([]) ->
   io:fwrite("Trying to fetch public key from: ~s\n", [Url]),
 
 
-  case httpc:request(get, {Url, [{"connection", "close"}]}, [], []) of
+  case httpc:request(get, {Url, [{"connection", "close"}]}, [], [{body_format, binary}]) of
     {ok, {{_, 200, _}, _, Resp }} -> {ok, Resp};
     Error                         -> {stop, Error}
   end.
